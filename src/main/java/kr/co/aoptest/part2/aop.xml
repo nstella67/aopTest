@@ -10,16 +10,35 @@
 	<!-- aop.xml -->
 	<!-- 
 		pointcut : 끼어드는 위치
-		advice : 실행코드
+		advice : 끼어들었을 때 실행되는 코드
 	 -->
 	 
+	 <!-- 스프링빈 객체 등록(Target) -->
+	 <bean id="svc" class="kr.co.aoptest.part2.ServiceImp"></bean>
+	 
+	 <!-- 스프링빈 객체 등록(Advice) -->
+	 <bean id="kim" class="kr.co.aoptest.part2.AdviceCommon"></bean>
+	 	 
+	 
+	 
 	 <!-- pointcut과 advice 정의 -->
+	<!-- 
 	 <aop:config>
 	 	<aop:pointcut expression="GilDong.say(..)" id="one" />
-	 	
 	 	<aop:aspect>
 	 		<aop:before method="test1()" pointcut-ref="one" />
 	 		<aop:after method="" />
 	 	</aop:aspect>
+	 </aop:config> -->
+	 
+	 <aop:config>
+	 	<aop:pointcut expression="execution(* kr.co.aoptest.part2.ServiceImp.first(..))" id="one" />
+	 	<aop:pointcut expression="execution(* kr.co.aoptest.part2.ServiceImp.second(..))" id="two" />
+	 	
+	 	<aop:aspect ref="kim">
+	 		<aop:before method="commMethod1" pointcut-ref="one" />
+	 		<aop:after method="commMethod2" pointcut-ref="two" />
+	 	</aop:aspect>
 	 </aop:config>
+	 
 </beans> 
